@@ -20,4 +20,4 @@ Things you may want to cover:
 
 ## Deployment instructions
 
-run `coffee --join html_parser.js --compile html_parser/html_parser.js.coffee html_parser/filters/*.js.coffee` to compile final js file.
+run `cat html_parser/html_parser.js.coffee html_parser/filters/*.js.coffee | coffee --compile --stdio > html_parser.js` to compile final js file.
