@@ -1,0 +1,37 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title></title>
+	<link href='http://fonts.googleapis.com/css?family=Roboto:400,300,700' rel='stylesheet' type='text/css'>
+	<link href="http://netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet">
+</head>
+<body>
+	<div class="content">
+		Filter youtube link and convert them into youtube embed video
+		<div class="parser">
+			<textarea placeholder="Text with a youtube link" cols="60" rows="10">Lorem ipsum dolor sit amet, consectetur adipiscing elit.https://www.youtube.com/watch?v=zKx2B8WCQuw Vivamus mi neque, pretium sed ex eu, porta hendrerit erat. Aenean luctus nunc nec massa interdum, eget.
+			</textarea>
+			<input name="parseYoutube" type="button" value="Submit" />
+		</div>
+		<div class="result"></div>
+	</div>
+
+	<script src="http://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+	<script>window.jQuery || document.write('<script src="js/vendor/jquery-2.1.1.min.js"><\/script>')</script>
+	<script type="text/javascript" src="../html_parser.js"></script>
+	<script type="text/javascript" src="../html_parser/youtube_filter.js"></script>
+	<script type="text/javascript">
+	var hp;
+	$(function(){
+		hp = new HtmlParser();
+    	hp.add_filter(new YoutubeFilter());
+
+		$("[name=parseYoutube").on('click', function(e){
+			e.preventDefault();
+			$(".result").html(hp.parse($('textarea').text()));
+		});
+	})
+	</script>
+</body>
+</html>
