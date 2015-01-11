@@ -11,18 +11,18 @@ describe('HtmlParser', function(){
 	})
 	describe('should be able to', function(){
 		it.skip('returns his filters', function(){
-			var filters = hp.get_filters() // an Array of HtmlParser Filters
+			var filters = hp.filters() // an Array of HtmlParser Filters
 			expect(filters).to.be.a("Array");
 		})
 		it.skip('add a filter', function(){
-			var filters_count = hp.get_filters().length;
-			hp.add_filter(new YoutubeFilter());
-			expect(hp.get_filters()).to.have.length(filters_count+1);
+			var filters_count = hp.filters().length;
+			hp.add_filter("Youtube");
+			expect(hp.filters()).to.have.length(filters_count+1);
 		})
 		it.skip('add many filters', function(){
-			var filters_count = hp.get_filters().length;
-			hp.add_filter([new YoutubeFilter(), new AnOtherFilter()]);
-			expect(hp.get_filters()).to.have.length(filters_count+2);
+			var filters_count = hp.filters().length;
+			hp.add_filters(["Youtube", "AnOtherFilter"]);
+			expect(hp.filters()).to.have.length(filters_count+2);
 		})
 	})
 	describe('should return', function(){
@@ -32,8 +32,14 @@ describe('HtmlParser', function(){
 		});
 		it("parse string when atleast one filters is given", function(){
 			var str = "lorem ipsum https://www.youtube.com/watch?v=zKx2B8WCQuw";
-			hp.add_filter(new YoutubeFilter());
+			hp.add_filter("Youtube");
 			expect(hp.parse(str).indexOf("<iframe") != -1).to.equal(true);
+		})
+	})
+	describe('should throw error when', function(){
+		it('everything but an array is given to add_filters', function(){
+			expect(function(){hp.add_filters("lorem")}).to.throw();
+			expect(function(){hp.add_filters([])}).to.not.throw();
 		})
 	})
 })
