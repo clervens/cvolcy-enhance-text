@@ -5,7 +5,23 @@
   };
 
   this.HtmlParser.prototype.add_filter = function(filter) {
-    this.filters.push(filter);
+    var filter_klass;
+    filter_klass = window[this._parse_filter_name_to_className(filter)];
+    if (typeof filter_klass === "function") {
+      this.filters.push(new filter_klass);
+    }
+  };
+
+  this.HtmlParser.prototype.add_filters = function(filters) {
+    var filter_name, _i, _len;
+    if (filters instanceof Array) {
+      for (_i = 0, _len = filters.length; _i < _len; _i++) {
+        filter_name = filters[_i];
+        this.add_filter(filter_name);
+      }
+    } else {
+      throw "Wrong parameter type. Expected an Array";
+    }
   };
 
   this.HtmlParser.prototype.parse = function(text) {
@@ -14,6 +30,32 @@
       text = this.filters[index].apply(text);
     }
     return text;
+  };
+
+  this.HtmlParser.prototype._parse_filter_name_to_className = function(filter_name) {
+    return filter_name.charAt(0).toUpperCase() + filter_name.slice(1).toLowerCase() + "Filter";
+  };
+
+  this.EscapeFilter = function(options) {
+    this.options = options;
+  };
+
+  this.EscapeFilter.prototype.apply = function(text) {
+    var lookup, options, regex;
+    regex = /['"><]/gi;
+    options = this.options;
+    lookup = {
+      "'": "&#39;",
+      "\"": "&quot;",
+      ">": '&gt;',
+      "<": '&lt;'
+    };
+    return text.replace(regex, function(match, elm, n) {
+      if (lookup[match]) {
+        return lookup[match];
+      }
+      return match;
+    });
   };
 
   this.YoutubeFilter = function(options) {
