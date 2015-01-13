@@ -1,4 +1,4 @@
-README | CVolcy - HTML PARSER
+README | CVolcy - ENHANCE TEXT
 ----
 
 Things you may want to cover:
@@ -8,8 +8,8 @@ Things you may want to cover:
 ## Usage
 
 ```javascript
-var hp = new HtmlParser();
-hp.add_filters([
+var et = new EnhanceText();
+et.add_filters([
 	'escape',
 	[
 		'youtube',
@@ -19,7 +19,7 @@ hp.add_filters([
 	]
 ]);
 var str = "Lorem <span>ipsum</span> https://www.youtube.com/watch?v=zKx2B8WCQuw";
-hp.parse(str); 
+et.parse(str); 
 	#=> Lorem &lt;span&gt;ipsum&lt;/span&gt; <div class="youtube_video"><iframe width="600"...
 ```
 
@@ -35,4 +35,4 @@ Open `/test/index.html` in your browser
 
 ## Deployment instructions
 
-run `cat html_parser/html_parser.js.coffee html_parser/filters/*.js.coffee | coffee --compile --stdio > html_parser.js` to compile final js file.
+run `cat enhance_text/enhance_text.js.coffee enhance_text/filters/*.js.coffee | coffee --compile --stdio > enhance_text.js` to compile final js file.

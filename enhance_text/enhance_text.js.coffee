@@ -1,13 +1,13 @@
-@HtmlParser = ->
+@EnhanceText = ->
   @filters = []
   return
 
-@HtmlParser::add_filter = (filter, options) ->
+@EnhanceText::add_filter = (filter, options) ->
   filter_klass = window[@_parse_filter_name_to_className(filter)]
   @filters.push new filter_klass(options||{}) if typeof filter_klass == "function"
   return
 
-@HtmlParser::add_filters = (filters) ->
+@EnhanceText::add_filters = (filters) ->
   if filters instanceof Array
     for filter in filters
       options = {}
@@ -21,10 +21,10 @@
     throw "Wrong parameter type. Expected an Array"
   return
 
-@HtmlParser::parse = (text) ->
+@EnhanceText::parse = (text) ->
   for index of @filters
     text = @filters[index].apply(text)
   text
 
-@HtmlParser::_parse_filter_name_to_className = (filter_name) ->
+@EnhanceText::_parse_filter_name_to_className = (filter_name) ->
   filter_name.charAt(0).toUpperCase() + filter_name.slice(1).toLowerCase() + "Filter"
