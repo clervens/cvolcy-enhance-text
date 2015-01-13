@@ -2,7 +2,7 @@ var expect = chai.expect;
 
 describe('HtmlParser', function(){
 	var hp;
-	var testStr = "lorem ipsum https://www.youtube.com/watch?v=zKx2B8WCQuw";
+	var testStr = "Lorem <span>ipsum</span> https://www.youtube.com/watch?v=zKx2B8WCQuw";
 	beforeEach(function(done){
 		hp = new HtmlParser();
 		done();
