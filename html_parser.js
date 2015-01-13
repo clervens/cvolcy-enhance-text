@@ -4,20 +4,27 @@
     this.filters = [];
   };
 
-  this.HtmlParser.prototype.add_filter = function(filter) {
+  this.HtmlParser.prototype.add_filter = function(filter, options) {
     var filter_klass;
     filter_klass = window[this._parse_filter_name_to_className(filter)];
     if (typeof filter_klass === "function") {
-      this.filters.push(new filter_klass);
+      this.filters.push(new filter_klass(options || {}));
     }
   };
 
   this.HtmlParser.prototype.add_filters = function(filters) {
-    var filter_name, _i, _len;
+    var filter, filter_name, options, _i, _len;
     if (filters instanceof Array) {
       for (_i = 0, _len = filters.length; _i < _len; _i++) {
-        filter_name = filters[_i];
-        this.add_filter(filter_name);
+        filter = filters[_i];
+        options = {};
+        if (filter instanceof Array) {
+          filter_name = filter[0];
+          options = filter[1];
+        } else {
+          filter_name = filter;
+        }
+        this.add_filter(filter_name, options);
       }
     } else {
       throw "Wrong parameter type. Expected an Array";
