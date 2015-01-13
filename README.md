@@ -7,7 +7,7 @@ Things you may want to cover:
 
 ## Usage
 
-```
+```javascript
 var hp = new HtmlParser();
 hp.add_filters([
 	'escape',
