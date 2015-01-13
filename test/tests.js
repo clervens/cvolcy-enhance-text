@@ -2,6 +2,7 @@ var expect = chai.expect;
 
 describe('HtmlParser', function(){
 	var hp;
+	var testStr = "lorem ipsum https://www.youtube.com/watch?v=zKx2B8WCQuw";
 	beforeEach(function(done){
 		hp = new HtmlParser();
 		done();
@@ -10,30 +11,37 @@ describe('HtmlParser', function(){
 		expect(hp instanceof HtmlParser).to.equal(true);
 	})
 	describe('should be able to', function(){
-		it.skip('returns his filters', function(){
-			var filters = hp.filters() // an Array of HtmlParser Filters
+		it('returns his filters', function(){
+			var filters = hp.filters // an Array of HtmlParser Filters
 			expect(filters).to.be.a("Array");
 		})
-		it.skip('add a filter', function(){
-			var filters_count = hp.filters().length;
+		it('add a filter', function(){
+			var filters_count = hp.filters.length;
 			hp.add_filter("Youtube");
-			expect(hp.filters()).to.have.length(filters_count+1);
+			expect(hp.filters).to.have.length(filters_count+1);
 		})
-		it.skip('add many filters', function(){
-			var filters_count = hp.filters().length;
-			hp.add_filters(["Youtube", "AnOtherFilter"]);
-			expect(hp.filters()).to.have.length(filters_count+2);
+		it('add a filter w/ options', function(){
+			var filters_count = hp.filters.length;
+			var width = 600;
+			hp.add_filter("Youtube", {
+				width: width
+			});
+			expect(hp.filters).to.have.length(filters_count+1);
+			expect(hp.parse(testStr).indexOf("width=\""+width+"\"") != -1).to.equal(true);
+		})
+		it('add many filters', function(){
+			var filters_count = hp.filters.length;
+			hp.add_filters(["Youtube", "escape"]);
+			expect(hp.filters).to.have.length(filters_count+2);
 		})
 	})
 	describe('should return', function(){
 		it("the same string when no filters given", function(){
-			var str = "lorem ipsum";
-			expect(hp.parse(str)).to.equal(str);
+			expect(hp.parse(testStr)).to.equal(testStr);
 		});
 		it("parse string when atleast one filters is given", function(){
-			var str = "lorem ipsum https://www.youtube.com/watch?v=zKx2B8WCQuw";
 			hp.add_filter("Youtube");
-			expect(hp.parse(str).indexOf("<iframe") != -1).to.equal(true);
+			expect(hp.parse(testStr).indexOf("<iframe") != -1).to.equal(true);
 		})
 	})
 	describe('should throw error when', function(){
