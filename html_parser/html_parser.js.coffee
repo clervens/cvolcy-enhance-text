@@ -2,15 +2,21 @@
   @filters = []
   return
 
-@HtmlParser::add_filter = (filter) ->
+@HtmlParser::add_filter = (filter, options) ->
   filter_klass = window[@_parse_filter_name_to_className(filter)]
-  @filters.push new filter_klass if typeof filter_klass == "function"
+  @filters.push new filter_klass(options||{}) if typeof filter_klass == "function"
   return
 
 @HtmlParser::add_filters = (filters) ->
   if filters instanceof Array
-    for filter_name in filters
-      @add_filter filter_name
+    for filter in filters
+      options = {}
+      if filter instanceof Array
+        filter_name = filter[0]
+        options = filter[1]
+      else
+        filter_name = filter
+      @add_filter filter_name, options
   else
     throw "Wrong parameter type. Expected an Array"
   return
