@@ -1,18 +1,18 @@
 var expect = chai.expect;
 
-describe('HtmlParser', function(){
+describe('EnhanceText', function(){
 	var hp;
 	var testStr = "Lorem <span>ipsum</span> https://www.youtube.com/watch?v=zKx2B8WCQuw";
 	beforeEach(function(done){
-		hp = new HtmlParser();
+		hp = new EnhanceText();
 		done();
 	})
 	it("class should exists", function(){
-		expect(hp instanceof HtmlParser).to.equal(true);
+		expect(hp instanceof EnhanceText).to.equal(true);
 	})
 	describe('should be able to', function(){
 		it('returns his filters', function(){
-			var filters = hp.filters // an Array of HtmlParser Filters
+			var filters = hp.filters // an Array of EnhanceText Filters
 			expect(filters).to.be.a("Array");
 		})
 		it('add a filter', function(){
