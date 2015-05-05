@@ -1,0 +1,1 @@
+cat enhance_text/enhance_text.js.coffee enhance_text/filters/*.js.coffee | coffee --compile --stdio > enhance_text.js
