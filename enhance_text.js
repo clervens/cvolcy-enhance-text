@@ -65,6 +65,29 @@
     });
   };
 
+  this.ImageFilter = function(options) {
+    this.options = $.extend({
+      width: false,
+      height: 150
+    }, options);
+  };
+
+  this.ImageFilter.prototype.apply = function(text) {
+    var options, regex;
+    regex = /.+((https?:\/\/)?\S+\.(gif|png|jpeg|jpg)(\?\S+|#\S+)?)/;
+    options = this.options;
+    return text.replace(regex, function(match, full_url, protocole, extension, query) {
+      var params;
+      console.log("protocole: %s\nurl: %s\nextension: %s\nquery:%s", protocole, full_url, extension, query);
+      params = [];
+      if (options.width) {
+        params.push("width=\"" + options.width + "\"");
+      }
+      params.push("height=\"" + options.height + "\"");
+      return '<img src="' + full_url + '" ' + params.join(' ') + ' />';
+    });
+  };
+
   this.YoutubeFilter = function(options) {
     this.options = $.extend({
       width: 420,
