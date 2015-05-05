@@ -10,8 +10,7 @@
 	<div class="content">
 		Filter youtube link and convert them into youtube embed video
 		<div class="parser">
-			<textarea placeholder="Text with a youtube link" cols="60" rows="10">Lorem ipsum dolor sit amet, consectetur adipiscing elit.https://www.youtube.com/watch?v=zKx2B8WCQuw Vivamus mi neque, pretium sed ex eu, porta hendrerit erat. Aenean luctus nunc nec massa interdum, eget.
-			</textarea>
+			<textarea placeholder="Text with a youtube link" cols="60" rows="10">images/test.jpg Lorem ipsum dolor sit amet, consectetur adipiscing elit. https://www.youtube.com/watch?v=zKx2B8WCQuw Vivamus mi neque, pretium sed ex eu, porta hendrerit erat. Aenean luctus nunc nec massa interdum, eget.</textarea>
 			<input name="parseYoutube" type="button" value="Submit" />
 		</div>
 		<div class="result"></div>
@@ -19,13 +18,26 @@
 
 	<script src="http://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
 	<script>window.jQuery || document.write('<script src="js/vendor/jquery-2.1.1.min.js"><\/script>')</script>
-	<script type="text/javascript" src="../html_parser.js"></script>
-	<script type="text/javascript" src="../html_parser/youtube_filter.js"></script>
+	<script type="text/javascript" src="../enhance_text.js"></script>
 	<script type="text/javascript">
 	var hp;
 	$(function(){
-		hp = new HtmlParser();
-    	hp.add_filter(new YoutubeFilter());
+		hp = new EnhanceText();
+    hp.add_filters([
+			'escape',
+		  [
+		    'image',
+		    {
+		      height: 150 //Size in pixel
+		    }
+		  ],
+			[
+				'youtube',
+				{
+					width: 600 //Size in pixel
+				}
+			]
+		]);
 
 		$("[name=parseYoutube").on('click', function(e){
 			e.preventDefault();
