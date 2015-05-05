@@ -6,10 +6,10 @@
   return
 
 @ImageFilter::apply = (text) ->
-  regex = /.+((https?:\/\/)?\S+\.(gif|png|jpeg|jpg)(\?\S+|#\S+)?)/
+  regex = /((https?:\/\/)?(\S+)\.(gif|png|jpeg|jpg)(\?\S+|#\S+)?)/
   options = @options
-  text.replace regex, (match, full_url, protocole, extension, query) ->
-    console.log("protocole: %s\nurl: %s\nextension: %s\nquery:%s", protocole, full_url, extension, query)
+  text.replace regex, (match, full_url, protocole, filename, extension, query) ->
+    console.log("protocole: %s\nurl: %s\nfilename: %s\nextension: %s\nquery:%s", protocole, full_url, filename, extension, query)
     params = []
     params.push "width=\""+options.width+"\"" if options.width
     params.push "height=\""+options.height+"\""

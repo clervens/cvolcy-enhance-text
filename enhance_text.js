@@ -74,11 +74,11 @@
 
   this.ImageFilter.prototype.apply = function(text) {
     var options, regex;
-    regex = /.+((https?:\/\/)?\S+\.(gif|png|jpeg|jpg)(\?\S+|#\S+)?)/;
+    regex = /((https?:\/\/)?(\S+)\.(gif|png|jpeg|jpg)(\?\S+|#\S+)?)/;
     options = this.options;
-    return text.replace(regex, function(match, full_url, protocole, extension, query) {
+    return text.replace(regex, function(match, full_url, protocole, filename, extension, query) {
       var params;
-      console.log("protocole: %s\nurl: %s\nextension: %s\nquery:%s", protocole, full_url, extension, query);
+      console.log("protocole: %s\nurl: %s\nfilename: %s\nextension: %s\nquery:%s", protocole, full_url, filename, extension, query);
       params = [];
       if (options.width) {
         params.push("width=\"" + options.width + "\"");
